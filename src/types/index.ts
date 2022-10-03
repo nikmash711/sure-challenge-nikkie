@@ -1,4 +1,4 @@
-export type PolicyholdersType = {
+export interface PolicyholdersType {
   name: string;
   age: number;
   address: {
@@ -10,4 +10,4 @@ export type PolicyholdersType = {
   };
   phoneNumber: string;
   isPrimary: boolean;
-};
+}
