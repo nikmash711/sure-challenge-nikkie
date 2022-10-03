@@ -17,6 +17,7 @@ function InstructionsBar({ onClick }: TInstructionsBar) {
         variant="contained"
         color="primary"
         size="large"
+        data-testid="view_challenges_button"
       >
         View challenges
       </Button>

@@ -1,5 +1,6 @@
-import { Link, Box } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link, Box, LinkProps } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+
 type TNavBar = {
   links: {
     text: string;
@@ -7,6 +8,19 @@ type TNavBar = {
     'data-testid'?: string;
   }[];
 };
+
+function CustomLink<C extends React.ElementType>(
+  props: LinkProps<C, { component?: C }>
+) {
+  return (
+    <Link
+      {...props}
+      style={({ isActive }: { isActive: boolean }) =>
+        isActive ? { textDecoration: 'underline' } : undefined
+      }
+    />
+  );
+}
 
 function NavBar({ links }: TNavBar) {
   return (
@@ -21,17 +35,17 @@ function NavBar({ links }: TNavBar) {
         alignItems: 'center',
       }}
     >
-      <Link
-        component={RouterLink}
+      <CustomLink
+        component={NavLink}
         to="/"
         sx={{ cursor: 'pointer', marginBottom: '80px', marginTop: '40px' }}
       >
         <img src="/surelogo.svg" alt="logo"></img>
-      </Link>
+      </CustomLink>
 
       {links.map(({ text, href, 'data-testid': dataTestId }) => (
-        <Link
-          component={RouterLink}
+        <CustomLink
+          component={NavLink}
           key={href}
           to={href}
           color="#fff"
@@ -43,9 +57,10 @@ function NavBar({ links }: TNavBar) {
             },
           }}
           data-testid={dataTestId}
+          aria-current="page"
         >
           {text}
-        </Link>
+        </CustomLink>
       ))}
     </Box>
   );
