@@ -15,7 +15,7 @@ function PolicyholdersView() {
     PolicyholdersType[] | undefined
   >();
 
-  // TODO: error and loading
+  // TODO: handle error and loading states in both fns below.
   const getPolicyholders = async () => {
     try {
       let { data } = await axios.get<PolicyholdersResponseType>(
@@ -23,7 +23,6 @@ function PolicyholdersView() {
       );
       setPolicyholders(data.policyHolders);
     } catch (e) {
-      // TODO: better error handling.
       console.log(e);
     }
   };
@@ -35,21 +34,12 @@ function PolicyholdersView() {
         fakeData
       );
       setPolicyholders(data.policyHolders);
-      // Ideally in a real app, when we make a POST request it would save the data
-      // in our database so the next time we do a GET or POST, the previous results
-      // would also be returned.
-      // If for some reason that couldn't be the case but we wanted to have good UX,
-      // we could use local storage to save the returned data so we could show
-      // the previously created tables to the user each time they revisit the page.
-      // However, for the purpose of this challenge, since we're hardcoding the data and not
-      // collecting any data from the user, it's unnecessary.
     } catch (e) {
-      // TODO: better error handling.
       console.log(e);
     }
   };
 
-  // On mount, make a GET request to the /api/policyholders endpoint
+  // On mount, make a GET request to the /api/policyholders endpoint.
   useEffect(() => {
     getPolicyholders();
   }, []);
@@ -84,7 +74,7 @@ function PolicyholdersView() {
           );
         })
       ) : (
-        <>Empty state</>
+        <div>This is where empty state UI would go!</div>
       )}
       <Button
         onClick={createPolicyholder}

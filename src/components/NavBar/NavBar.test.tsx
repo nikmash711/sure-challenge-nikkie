@@ -7,7 +7,6 @@ describe('NavBar', () => {
     links,
   };
 
-  // I tweaked the test below to use the actual links we use in the app.
   it('should render NavBar links', () => {
     const { getByTestId } = renderWithProviders(<NavBar {...defaultProps} />);
     links.map((link) =>
