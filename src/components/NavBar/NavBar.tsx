@@ -1,5 +1,6 @@
 import { Link, Box } from '@mui/material';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
+
 type TNavBar = {
   links: {
     text: string;

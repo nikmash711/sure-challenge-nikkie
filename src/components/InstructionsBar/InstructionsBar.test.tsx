@@ -1,6 +1,7 @@
-import InstructionsBar from './InstructionsBar';
-import { renderWithProviders } from '../../utils/test';
 import { fireEvent } from '@testing-library/react';
+
+import { renderWithProviders } from 'utils/test';
+import InstructionsBar from './InstructionsBar';
 
 describe('InstructionsBar', () => {
   const defaultProps = {

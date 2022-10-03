@@ -1,6 +1,6 @@
+import links from 'constants/links';
+import { renderWithProviders } from 'utils/test';
 import NavBar from './NavBar';
-import { renderWithProviders } from '../../utils/test';
-import links from '../../constants/links';
 
 describe('NavBar', () => {
   const defaultProps = {

@@ -2,22 +2,9 @@ import axios from 'axios';
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import InfoTable from '../InfoTable';
-import { fakeData } from '../../constants/data';
-
-type PolicyholdersType = {
-  name: string;
-  age: number;
-  address: {
-    line1: string;
-    line2: string | undefined;
-    city: string;
-    state: string;
-    postalCode: string;
-  };
-  phoneNumber: string;
-  isPrimary: boolean;
-};
+import InfoTable from 'components/InfoTable';
+import { fakeData } from 'constants/data';
+import { PolicyholdersType } from 'types';
 
 type PolicyholdersResponseType = {
   policyHolders: PolicyholdersType[];
