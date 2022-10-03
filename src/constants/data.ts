@@ -1,6 +1,6 @@
-import { PolicyholdersType } from 'types';
+import { PolicyHoldersType } from 'types';
 
-export const fakeData: PolicyholdersType = {
+export const fakeData: PolicyHoldersType = {
   name: 'Mr. Policy',
   age: 32,
   address: {

@@ -4,50 +4,50 @@ import { useEffect, useState } from 'react';
 
 import InfoTable from 'components/InfoTable';
 import { fakeData } from 'constants/data';
-import { PolicyholdersType } from 'types';
+import { PolicyHoldersType } from 'types';
 
-type PolicyholdersResponseType = {
-  policyHolders: PolicyholdersType[];
+type PolicyHoldersResponseType = {
+  policyHolders: PolicyHoldersType[];
 };
 
-function PolicyholdersView() {
-  const [policyholders, setPolicyholders] = useState<
-    PolicyholdersType[] | undefined
+function PolicyHoldersView() {
+  const [policyHolders, setPolicyHolders] = useState<
+    PolicyHoldersType[] | undefined
   >();
 
   // TODO: handle error and loading states in both fns below.
-  const getPolicyholders = async () => {
+  const getPolicyHolders = async () => {
     try {
-      let { data } = await axios.get<PolicyholdersResponseType>(
+      let { data } = await axios.get<PolicyHoldersResponseType>(
         'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
       );
-      setPolicyholders(data.policyHolders);
+      setPolicyHolders(data.policyHolders);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const createPolicyholder = async () => {
+  const createPolicyHolder = async () => {
     try {
-      let { data } = await axios.post<PolicyholdersResponseType>(
+      let { data } = await axios.post<PolicyHoldersResponseType>(
         'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders',
         fakeData
       );
-      setPolicyholders(data.policyHolders);
+      setPolicyHolders(data.policyHolders);
     } catch (e) {
       console.log(e);
     }
   };
 
-  // On mount, make a GET request to the /api/policyholders endpoint.
+  // On mount, make a GET request to the /api/policyHolders endpoint.
   useEffect(() => {
-    getPolicyholders();
+    getPolicyHolders();
   }, []);
 
   return (
     <Box sx={{ textAlign: 'center' }}>
-      {policyholders?.length ? (
-        policyholders.map((policyholder) => {
+      {policyHolders?.length ? (
+        policyHolders.map((policyholder) => {
           const { name, age, address, phoneNumber, isPrimary } = policyholder;
           const rows = [
             { key: 'Name', value: name },
@@ -77,7 +77,7 @@ function PolicyholdersView() {
         <div>This is where empty state UI would go!</div>
       )}
       <Button
-        onClick={createPolicyholder}
+        onClick={createPolicyHolder}
         variant="outlined"
         color="primary"
         size="large"
@@ -88,4 +88,4 @@ function PolicyholdersView() {
   );
 }
 
-export default PolicyholdersView;
+export default PolicyHoldersView;

@@ -1,4 +1,4 @@
-export interface PolicyholdersType {
+export interface PolicyHoldersType {
   name: string;
   age: number;
   address: {
