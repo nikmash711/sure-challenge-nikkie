@@ -3,6 +3,7 @@ import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import InfoTable from '../InfoTable';
+import { fakeData } from '../../constants/data';
 
 type PolicyholdersType = {
   name: string;
@@ -41,18 +42,6 @@ function PolicyholdersView() {
   };
 
   const createPolicyholder = async () => {
-    // Hardcoding this data for the purpose of this assignment.
-    const fakeData = {
-      name: 'Mr. Policy',
-      age: 32,
-      address: {
-        line1: '789 Hold Ave',
-        city: 'Los Angeles',
-        state: 'CA',
-        postalCode: '90035',
-      },
-      phoneNumber: '818-123-4567',
-    };
     try {
       let { data } = await axios.post<PolicyholdersResponseType>(
         'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders',
