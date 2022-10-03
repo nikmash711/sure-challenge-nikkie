@@ -18,7 +18,7 @@ type PolicyholdersType = {
   isPrimary: boolean;
 };
 
-type GetPolicyholdersResponse = {
+type PolicyholdersResponseType = {
   policyHolders: PolicyholdersType[];
 };
 
@@ -29,10 +29,15 @@ function PolicyholdersView() {
 
   // TODO: error and loading
   const getPolicyholders = async () => {
-    let { data } = await axios.get<GetPolicyholdersResponse>(
-      'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
-    );
-    setPolicyholders(data.policyHolders);
+    try {
+      let { data } = await axios.get<PolicyholdersResponseType>(
+        'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders'
+      );
+      setPolicyholders(data.policyHolders);
+    } catch (e) {
+      // TODO: better error handling.
+      console.log(e);
+    }
   };
 
   const createPolicyholder = async () => {
@@ -48,10 +53,24 @@ function PolicyholdersView() {
       },
       phoneNumber: '818-123-4567',
     };
-    let response = await axios.post(
-      'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders',
-      fakeData
-    );
+    try {
+      let { data } = await axios.post<PolicyholdersResponseType>(
+        'https://fe-interview-technical-challenge-api-git-main-sure.vercel.app/api/policyholders',
+        fakeData
+      );
+      setPolicyholders(data.policyHolders);
+      // Ideally in a real app, when we make a POST request it would save the data
+      // in our database so the next time we do a GET or POST, the previous results
+      // would also be returned.
+      // If for some reason that couldn't be the case but we wanted to have good UX,
+      // we could use local storage to save the returned data so we could show
+      // the previously created tables to the user each time they revisit the page.
+      // However, for the purpose of this challenge, since we're hardcoding the data and not
+      // collecting any data from the user, it's unnecessary.
+    } catch (e) {
+      // TODO: better error handling.
+      console.log(e);
+    }
   };
 
   // On mount, make a GET request to the /api/policyholders endpoint
@@ -84,6 +103,7 @@ function PolicyholdersView() {
               key={`${name}-${phoneNumber}`}
               header={policyholder.name}
               rows={rows}
+              sx={{ padding: '16px 0' }}
             />
           );
         })
