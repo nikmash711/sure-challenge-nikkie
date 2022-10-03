@@ -89,3 +89,9 @@ function PolicyHoldersView() {
 }
 
 export default PolicyHoldersView;
+
+// TODO: Before shipping this to prod, I would:
+// - Handle error, loading, and empty states
+// - Write a test for this new component
+// - Implement better UX for creating a new policy holder - allow user to fill
+// in the info, and have the db save it or save it to local storage so it persists.
