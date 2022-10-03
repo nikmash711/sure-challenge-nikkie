@@ -1,5 +1,5 @@
-import { Link, Box } from '@mui/material';
-import { NavLink as RouterLink, useLocation } from 'react-router-dom';
+import { Link, Box, LinkProps } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 type TNavBar = {
   links: {
@@ -9,9 +9,27 @@ type TNavBar = {
   }[];
 };
 
-function NavBar({ links }: TNavBar) {
-  let location = useLocation();
+// I created a generic custom component so that I can use the NavLink "style"
+// prop to display a specific style when the link is active or not.
+// I followed the MUI docs here to do this:
+// https://mui.com/material-ui/guides/composition/#with-typescript
+// Another solution would have been to utilize react-router-dom's useLocation
+// to determine the location.pathname, and then change the underline style when
+// mapping through each link further below if the location.pathname equals the given href.
+function CustomLink<C extends React.ElementType>(
+  props: LinkProps<C, { component?: C }>
+) {
+  return (
+    <Link
+      {...props}
+      style={({ isActive }: { isActive: boolean }) =>
+        isActive ? { textDecoration: 'underline' } : undefined
+      }
+    />
+  );
+}
 
+function NavBar({ links }: TNavBar) {
   return (
     <Box
       component="aside"
@@ -24,25 +42,21 @@ function NavBar({ links }: TNavBar) {
         alignItems: 'center',
       }}
     >
-      <Link
-        component={RouterLink}
+      <CustomLink
+        component={NavLink}
         to="/"
         sx={{ cursor: 'pointer', marginBottom: '80px', marginTop: '40px' }}
       >
         <img src="/surelogo.svg" alt="logo"></img>
-      </Link>
+      </CustomLink>
 
       {links.map(({ text, href, 'data-testid': dataTestId }) => (
-        <Link
-          component={RouterLink}
+        <CustomLink
+          component={NavLink}
           key={href}
           to={href}
           color="#fff"
-          // I wanted to use react router's NavLink to style based on if the link is
-          // active or not (as described here https://reactrouter.com/en/v6.3.0/api#navlink),
-          // but couldn't get it to work properly with how we're forwarding props. So I used
-          // useLocation instead for time's sake, but it doesn't seem like the best solution.
-          underline={location.pathname === href ? 'always' : 'hover'}
+          underline="hover"
           sx={{
             cursor: 'pointer',
             '&:not(:last-of-type)': {
@@ -53,7 +67,7 @@ function NavBar({ links }: TNavBar) {
           aria-current="page"
         >
           {text}
-        </Link>
+        </CustomLink>
       ))}
     </Box>
   );
